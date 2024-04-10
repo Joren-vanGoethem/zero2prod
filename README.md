@@ -1,0 +1,1 @@
+postgres://sa:cgsz4NT3sYYSQN@hz6f2dc.glddns.com:5432/newsletter
