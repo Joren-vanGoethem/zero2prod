@@ -4,6 +4,7 @@ use sqlx::{Connection, Executor, PgConnection, PgPool};
 use uuid::Uuid;
 
 use zero2prod::configuration::{get_configuration, DatabaseSettings};
+use zero2prod::startup::run;
 
 pub struct TestApp {
     pub address: String,
@@ -118,12 +119,7 @@ async fn spawn_app() -> TestApp {
 
     let connection_pool = configure_database(&configuration.database).await;
 
-    // let connection_pool = PgPool::connect(&configuration.database.connection_string())
-    //     .await
-    //     .expect("Failed to connect to Postgres.");
-
-    let server =
-        zero2prod::run(listener, connection_pool.clone()).expect("Failed to bind to address.");
+    let server = run(listener, connection_pool.clone()).expect("Failed to bind to address.");
 
     // tokio::spawn launches the server as a background task
     // and returns a handle to the spawned future
